@@ -1,6 +1,8 @@
-from classes import Internship, Report
+from classes import Report
 from docx import Document
 from docx.shared import Inches
+from pathlib import Path
+from datetime import date
 
 
 def edit_document(template_path, output_path, image_path, data:dict):
@@ -30,4 +32,16 @@ def edit_document(template_path, output_path, image_path, data:dict):
 
 # run if main
 if __name__ == '__main__':
-     pass
+     cwd = Path.cwd()
+
+     template_path = cwd /'templates'/'DAILY_JOURNAL_TEMPLATE.docx'
+     output_path = cwd /'outputs'/'DailyJounalNo###.docx'
+     image_path = cwd / 'imgs'
+     report_date = date(2024, 9, 26)
+     # image file names must follow the format "d# (1).PNG"
+     uip_internship_report = Report('uip', 561, 6, template_path, output_path, image_path, report_date)
+
+     uip_internship_report.update_hours()
+     uip_internship_report.save_report()
+     uip_internship_report.edit_document()
+

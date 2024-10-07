@@ -1,4 +1,3 @@
-Title: Working Hard All Day and All Night
+Title: New Technology and New Knowledge
 Description:
-Today, I learned about XAMPP and made the repository work in my local machine.
-There is still so much to learn and I am glad I can feel my progress.
+Today I studied the OOP PHP and MVC PHP videos shared by our supervisor. Gave me a good idea of what to expect for backend programming with Laravel.

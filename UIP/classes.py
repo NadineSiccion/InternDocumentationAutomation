@@ -4,6 +4,7 @@ import json
 from datetime import date, timedelta
 from docx import Document
 from docx.shared import Inches
+from pathlib import Path
 
 
 
@@ -90,32 +91,33 @@ class Internship():
         return internship
 
 class Report(Internship):
-    def __init__(self, name, remaining_hours:int, djnum_counter, template_path, output_path, image_path):
+    def __init__(self, name, remaining_hours:int, djnum_counter, template_path, output_path:Path, image_path, report_date):
         super().__init__(name, remaining_hours, djnum_counter)
         self.template_path = template_path
         self.output_path = output_path
         self.image_path = image_path
+        self.report_date = report_date
 
     def set_date(self, date):
         self.date = date
     
-    def generate_data(self, date)->dict:
+    def generate_data(self)->dict:
         td = self.get_daily_entry()
 
         djnum = self.djnum_counter
-        month = date.month
-        day = date.day
-        year = date.year
+        month = self.report_date.strftime('%B')
+        day = self.report_date.day
+        year = self.report_date.year
         remaining_hours = self.remaining_hours
         journal_title = td['title']
         journal_desc = td['entry']
 
         data_dict = {
-        '[DJNUM]': djnum,
-        '[MONTH]': month,
-        '[DAY]': day,
-        '[YEAR]': year,
-        '[REMAINING HOURS]': remaining_hours,
+        '[DJNUM]': str(djnum),
+        '[MONTH]': str(month),
+        '[DAY]': str(day),
+        '[YEAR]': str(year),
+        '[REMAINING HOURS]': str(remaining_hours),
         '[JOURNAL TITLE]': journal_title,
         '[JOURNAL DESCRIPTION]': journal_desc
         }
@@ -132,9 +134,9 @@ class Report(Internship):
         'name': self.name,
         'remaining_hours': self.remaining_hours,
         'djnum_counter': self.djnum_counter,
-        'template_path': self.template_path,
-        'output_path': self.output_path,
-        'image_path': self.image_path,
+        'template_path': str(self.template_path),
+        'output_path': str(self.output_path),
+        'image_path': str(self.image_path),
         'date': None,
         }
         file_name = f'{self.name}_report.json'
@@ -147,8 +149,8 @@ class Report(Internship):
         doc = Document(self.template_path)
         data = self.generate_data()
 
-        img_file1 = self.image_path + f'd{data["[DJNUM]"] + ' (1).PNG'}'
-        img_file2 = self.image_path + f'd{data["[DJNUM]"] + ' (2).PNG'}'
+        img_file1 = self.image_path / f'd{str(data["[DJNUM]"]) + ' (1).PNG'}'
+        img_file2 = self.image_path / f'd{str(data["[DJNUM]"]) + ' (2).PNG'}'
 
         for paragraph in doc.paragraphs:
             for key, value in data.items():
@@ -157,15 +159,16 @@ class Report(Internship):
                             run.text = run.text.replace(key, value)
                         print('Replaced "' + key + '" with "' + value + '".')
         
-        print(f'looking for file "{img_file1}"')
-        doc.add_picture(img_file1, width=Inches(6))
+        print(f'looking for file "{str(img_file1)}"')
+        doc.add_picture(str(img_file1), width=Inches(6))
         print('Picture added.')
 
-        print(f'looking for file "{img_file2}"')
-        doc.add_picture(img_file2, width=Inches(6))
+        print(f'looking for file "{str(img_file2)}"')
+        doc.add_picture(str(img_file2), width=Inches(6))
         print('Picture added.')
         
-        doc.save(self.output_path)
+        new_filename = str(self.output_path.name).replace("###", f"{self.djnum_counter:03d}")
+        doc.save(self.output_path.with_name(new_filename))
         print('Saved output at ' + str(self.output_path) + '.')
 
 # edit_document(template_path, output_path, image_path, data)
