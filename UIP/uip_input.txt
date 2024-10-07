@@ -1,0 +1,4 @@
+Title: Working Hard All Day and All Night
+Description:
+Today, I learned about XAMPP and made the repository work in my local machine.
+There is still so much to learn and I am glad I can feel my progress.
