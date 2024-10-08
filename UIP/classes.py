@@ -45,6 +45,8 @@ class Internship():
                     while not (desc_line.strip() == ''): 
                         desc_line = in_file.readline()
                         print(desc_line)
+                        if desc_line[-1] == '\n':
+                            journal_entry += '\n'
                         journal_entry += (desc_line.strip() + '\n')
                         print('journal entry: ' + journal_entry)
                     print('desc done')
@@ -91,12 +93,13 @@ class Internship():
         return internship
 
 class Report(Internship):
-    def __init__(self, name, remaining_hours:int, djnum_counter, template_path, output_path:Path, image_path, report_date):
+    def __init__(self, name, remaining_hours:int, djnum_counter, template_path:Path, output_path:Path, image_path:Path, report_date:date):
         super().__init__(name, remaining_hours, djnum_counter)
         self.template_path = template_path
         self.output_path = output_path
         self.image_path = image_path
         self.report_date = report_date
+        self.cwd = os.getcwd()
 
     def set_date(self, date):
         self.date = date
@@ -124,20 +127,39 @@ class Report(Internship):
         return data_dict
     
     def add_to_current_day(self, days=1):
-        if self.date:
-            self.date += timedelta(days=days)
+        if self.report_date:
+            self.report_date += timedelta(days=days)
         else:
             print("No date assigned to this Report object.")
     
     def save_report(self):
+        # Unsure that paths are relative and .relative_to is not used in a redundant manner
+        if self.template_path.is_absolute():
+            save_template_path = str(self.template_path.relative_to(self.cwd))
+        else:
+            save_template_path = str(self.template_path)
+        
+        if self.output_path.is_absolute():
+            save_output_path = str(self.output_path.relative_to(self.cwd))
+        else:
+            save_output_path = str(self.output_path)
+        
+        if self.image_path.is_absolute():
+            save_image_path = str(self.image_path.relative_to(self.cwd))
+        else:
+            save_image_path = str(self.image_path)
+
         report_dict = {
         'name': self.name,
         'remaining_hours': self.remaining_hours,
         'djnum_counter': self.djnum_counter,
-        'template_path': str(self.template_path),
-        'output_path': str(self.output_path),
-        'image_path': str(self.image_path),
-        'date': None,
+        'template_path': save_template_path,
+        'output_path': save_output_path,
+        'image_path': save_image_path,
+        'report_date': {
+            'year': str(self.report_date.year), 
+            'month': str(self.report_date.month),
+            'day': str(self.report_date.day)}
         }
         file_name = f'{self.name}_report.json'
 
@@ -149,8 +171,8 @@ class Report(Internship):
         doc = Document(self.template_path)
         data = self.generate_data()
 
-        img_file1 = self.image_path / f'd{str(data["[DJNUM]"]) + ' (1).PNG'}'
-        img_file2 = self.image_path / f'd{str(data["[DJNUM]"]) + ' (2).PNG'}'
+        img_file1 = self.image_path.joinpath(f'd{str(data["[DJNUM]"]) + ' (1).PNG'}')
+        img_file2 = self.image_path.joinpath(f'd{str(data["[DJNUM]"]) + ' (2).PNG'}')
 
         for paragraph in doc.paragraphs:
             for key, value in data.items():
@@ -169,7 +191,42 @@ class Report(Internship):
         
         new_filename = str(self.output_path.name).replace("###", f"{self.djnum_counter:03d}")
         doc.save(self.output_path.with_name(new_filename))
-        print('Saved output at ' + str(self.output_path) + '.')
+        print('Saved output at ' + str(self.output_path).replace('###', f'{self.djnum_counter:03d}') + '.')
+    
+    def load_report(name):
+        try:
+            with open(f'{name}_report.json', 'r') as save_file:
+                data = json.load(save_file)
+        except Exception as e:
+            print(f"An error occurred: {e}")
+            return 0
+        
+        remaining_hours = data['remaining_hours']
+        djnum = data['djnum_counter']
+        template_path = Path(data['template_path'])
+        output_path = Path(data['output_path'])
+        image_path = Path(data['image_path'])
+        report_date = date(int(data['report_date']['year']), int(data['report_date']['month']), int(data['report_date']['day']))
+        
+        report = Report(name, remaining_hours, djnum, template_path, output_path, image_path, report_date)
+        
+
+        return report
+    
+    def update_counters(self, day:str):
+        '''Updates djnum, hours and current date. To be done after generating the last report.
+        Parameters: day -  can be "T" or "Th". Put the day of the report recently made.
+        '''
+        self.update_djnum(1)
+        self.update_hours()
+        if day.lower() == "t":
+            self.add_to_current_day(2)
+        elif day.lower() == "th":
+            self.add_to_current_day(5)
+        
+        print('Report counters updated for the next report.')
+
+
 
 # edit_document(template_path, output_path, image_path, data)
 

@@ -32,16 +32,35 @@ def edit_document(template_path, output_path, image_path, data:dict):
 
 # run if main
 if __name__ == '__main__':
-     cwd = Path.cwd()
+    # days from Tue to Thur = 2
+    # days from Thur to Tue = 5
 
-     template_path = cwd /'templates'/'DAILY_JOURNAL_TEMPLATE.docx'
-     output_path = cwd /'outputs'/'DailyJounalNo###.docx'
-     image_path = cwd / 'imgs'
-     report_date = date(2024, 9, 26)
-     # image file names must follow the format "d# (1).PNG"
-     uip_internship_report = Report('uip', 561, 6, template_path, output_path, image_path, report_date)
+    cwd = Path.cwd()
 
-     uip_internship_report.update_hours()
-     uip_internship_report.save_report()
-     uip_internship_report.edit_document()
 
+    template_path = cwd /'templates'/'DAILY_JOURNAL_TEMPLATE.docx'
+    output_path = cwd /'outputs'/'DailyJounalNo###.docx'
+    image_path = cwd / 'imgs'
+    report_date = date(2024, 9, 26)
+
+    # CODE FIRST SCRIPT RUN FOR DJ#6 --DO NOT RUN
+    # image file names must follow the format "d# (1).PNG"
+    # uip_internship_report = Report('uip', 561, 6, template_path, output_path, image_path, report_date)
+
+    # uip_internship_report.update_hours()
+    # uip_internship_report.penalize(1)
+    # uip_internship_report.save_report()
+    # uip_internship_report.edit_document()
+
+    # DAY 7
+    # uip_internship_report = Report.load_report('uip')
+    # # print(type(uip_internship_report), isinstance(uip_internship_report, Report))
+    # uip_internship_report.update_counters('Th')
+    # uip_internship_report.penalize(1)
+    # uip_internship_report.save_report()
+    # uip_internship_report.edit_document()
+
+    uip_internship_report = Report.load_report('uip')
+    uip_internship_report.update_counters('Th')
+    uip_internship_report.save_report()
+    uip_internship_report.edit_document()

@@ -1,9 +1,13 @@
 {
     "name": "uip",
-    "remaining_hours": 553,
-    "djnum_counter": 6,
-    "template_path": "C:\\Users\\nvsic\\Documents\\Personal Projects\\InternDocumentationAutomation\\UIP\\templates\\DAILY_JOURNAL_TEMPLATE.docx",
-    "output_path": "C:\\Users\\nvsic\\Documents\\Personal Projects\\InternDocumentationAutomation\\UIP\\outputs\\DailyJounalNo###.docx",
-    "image_path": "C:\\Users\\nvsic\\Documents\\Personal Projects\\InternDocumentationAutomation\\UIP\\imgs",
-    "date": null
+    "remaining_hours": 531,
+    "djnum_counter": 9,
+    "template_path": "templates\\DAILY_JOURNAL_TEMPLATE.docx",
+    "output_path": "outputs\\DailyJounalNo###.docx",
+    "image_path": "imgs",
+    "report_date": {
+        "year": "2024",
+        "month": "10",
+        "day": "8"
+    }
 }

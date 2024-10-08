@@ -1,3 +1,4 @@
-Title: New Technology and New Knowledge
+Title: XAMPP, MySQL and PDO on my local machine
 Description:
-Today I studied the OOP PHP and MVC PHP videos shared by our supervisor. Gave me a good idea of what to expect for backend programming with Laravel.
+I was able to install XAMPP, troubleshoot a few bugs in it (because I already had a MySQL server running on the same port from an older project), and study more of the git repository for the offboarding form. I am able to run the the form through the Apache server and am reviewing how to run the PDO and understand the code better.
+Seems we have a meeting tomorrow on 3:00pm, I will definitely make it there and try my best to understand the task and contribute.
