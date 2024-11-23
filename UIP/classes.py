@@ -45,8 +45,9 @@ class Internship():
                     while not (desc_line.strip() == ''): 
                         desc_line = in_file.readline()
                         print(desc_line)
-                        if desc_line[-1] == '\n':
-                            journal_entry += '\n'
+                        if desc_line:
+                            if desc_line[-1] == '\n':
+                                journal_entry += '\n'
                         journal_entry += (desc_line.strip() + '\n')
                         print('journal entry: ' + journal_entry)
                     print('desc done')
@@ -166,6 +167,10 @@ class Report(Internship):
         with open(file_name, 'w') as save_file:
             json.dump(report_dict, save_file, indent=4)
         print(f'Save file for {self.name} Report has been created')
+    
+    def add_absent(self, consecutive_absents = 1):
+        self.djnum_counter -= consecutive_absents
+        print('Deducted ' + consecutive_absents + ' from djnum')
  
     def edit_document(self):
         doc = Document(self.template_path)

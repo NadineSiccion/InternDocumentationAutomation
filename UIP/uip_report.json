@@ -1,13 +1,13 @@
 {
     "name": "uip",
-    "remaining_hours": 531,
-    "djnum_counter": 9,
+    "remaining_hours": 492,
+    "djnum_counter": 14,
     "template_path": "templates\\DAILY_JOURNAL_TEMPLATE.docx",
     "output_path": "outputs\\DailyJounalNo###.docx",
     "image_path": "imgs",
     "report_date": {
         "year": "2024",
         "month": "10",
-        "day": "8"
+        "day": "24"
     }
 }

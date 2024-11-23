@@ -1,4 +1,3 @@
-Title: XAMPP, MySQL and PDO on my local machine
+Title: Debugging AJAX, JS, and PHP
 Description:
-I was able to install XAMPP, troubleshoot a few bugs in it (because I already had a MySQL server running on the same port from an older project), and study more of the git repository for the offboarding form. I am able to run the the form through the Apache server and am reviewing how to run the PDO and understand the code better.
-Seems we have a meeting tomorrow on 3:00pm, I will definitely make it there and try my best to understand the task and contribute.
+Lots of debugging of the repository. I was able to get some errors out of the way but still far from done. Currently investigating the connection between AJAX and offboarding.php. Will try putting debugging logs so I can see what is actually happening in the PHP file rather than just assuming what worked and what failed.
