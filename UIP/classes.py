@@ -199,6 +199,7 @@ class Report(Internship):
         print('Saved output at ' + str(self.output_path).replace('###', f'{self.djnum_counter:03d}') + '.')
     
     def load_report(name):
+        """Loads report data from a save file"""
         try:
             with open(f'{name}_report.json', 'r') as save_file:
                 data = json.load(save_file)
