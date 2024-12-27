@@ -22,6 +22,7 @@ if __name__ == "__main__":
 
     # ama = classes.Report(1, 600, 0, "2024-09-23", "2024-09-23", template_path, out_path, save_path)
     ama = classes.Report.load_report(save_path)
+    # ama.add_hour_difference(1)
     ama.update_internship()
     ama.edit_document()
     # if absent, uncomment:

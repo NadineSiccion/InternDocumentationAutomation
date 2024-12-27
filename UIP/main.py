@@ -60,9 +60,7 @@ if __name__ == '__main__':
     # uip_internship_report.save_report()
     # uip_internship_report.edit_document()
 
-    # use .update() with "T" to add 2 days, and "Th" to add 5 days
-
     uip_internship_report = Report.load_report('uip')
-    uip_internship_report.update_counters('T')
+    uip_internship_report.update_counters('F') # put the date you completed last
     uip_internship_report.edit_document()
     uip_internship_report.save_report()

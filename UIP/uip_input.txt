@@ -1,3 +1,3 @@
-Title: Debugging AJAX, JS, and PHP
+Title: Final Touches on Project 
 Description:
-Lots of debugging of the repository. I was able to get some errors out of the way but still far from done. Currently investigating the connection between AJAX and offboarding.php. Will try putting debugging logs so I can see what is actually happening in the PHP file rather than just assuming what worked and what failed.
+Worked on final touches to make my project ready for submitting. There are still many features I believe I could implement however I cannot given the limited time and my limited experience. Though, I am happy with the fully function CRUD RESTful API backend made with PHP and the hands on experience I've gained with the MVC framework. This has been a wonderful learning experience for me. I am working on writing the email to request for my remaining weekly reports and am now eligible for requesting Offboarding, which I will work on tomorrow. Thank you very much for this journey!

@@ -170,7 +170,9 @@ class Report(Internship):
     
     def add_absent(self, consecutive_absents = 1):
         self.djnum_counter -= consecutive_absents
-        print('Deducted ' + consecutive_absents + ' from djnum')
+        self.remaining_hours += 8
+        print('Deducted ' + str(consecutive_absents) + ' from djnum and 1-day worth of hours (8 hours) from completed hours.')
+
  
     def edit_document(self):
         doc = Document(self.template_path)
@@ -225,10 +227,16 @@ class Report(Internship):
         '''
         self.update_djnum(1)
         self.update_hours()
+        if day.lower() == "m":
+            self.add_to_current_day(1)
         if day.lower() == "t":
-            self.add_to_current_day(2)
+            self.add_to_current_day(1)
+        elif day.lower() == "w":
+            self.add_to_current_day(1)
         elif day.lower() == "th":
-            self.add_to_current_day(5)
+            self.add_to_current_day(1)
+        elif day.lower() == "f":
+            self.add_to_current_day(3)
         
         print('Report counters updated for the next report.')
 
