@@ -20,9 +20,13 @@ class Internship():
     def date_to_str(date:date) -> str:
         return date.strftime("%B %d, %Y")
     
+
     def str_to_date(datestring:str) -> date:
         temp = str(datestring).split('-')
         return date(int(temp[0]), int(temp[1]), int(temp[2]))
+    
+    def set_current_week_start(self, date:str):
+        self.current_week_start = Internship.str_to_date(date)
     
     def get_week_dates(self, week_start:date)->list[date]:
         """Returns a list of 5 consecutive days starting from a given date YYYY/MM/DD"""

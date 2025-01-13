@@ -24,6 +24,7 @@ if __name__ == "__main__":
     ama = classes.Report.load_report(save_path)
     # ama.add_hour_difference(1)
     ama.update_internship()
+    # ama.set_current_week_start("2025-01-06")
     ama.edit_document()
     # if absent, uncomment:
     # ama.add_hour_difference(-6)
