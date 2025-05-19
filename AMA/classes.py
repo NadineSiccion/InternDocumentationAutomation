@@ -28,12 +28,17 @@ class Internship():
     def set_current_week_start(self, date:str):
         self.current_week_start = Internship.str_to_date(date)
     
-    def get_week_dates(self, week_start:date)->list[date]:
+    def get_week_dates(self, week_start:date, days_in_week = None)->list[str]:
         """Returns a list of 5 consecutive days starting from a given date YYYY/MM/DD"""
         temp_list = []
-        for i in range(5):
-            temp_list.append(week_start)
-            week_start += timedelta(days=1)
+        if (days_in_week == None):
+            for i in range(5):
+                temp_list.append(week_start)
+                week_start += timedelta(days=1)
+        else:
+            for i in range(days_in_week):
+                temp_list.append(week_start)
+                week_start += timedelta(days=1)
         
         week_dates = []
         for day in temp_list:
@@ -155,22 +160,24 @@ class Report(Internship):
             week_start = Internship.str_to_date(week_start)
         else: 
             week_start = self.current_week_start
-        weekdays = self.get_week_dates(week_start)
+        weekdays = self.get_week_dates(week_start, days_per_week)
         week_end = weekdays[-1]
 
         week_no = self.week_no
         week_hrs = hours_per_day*days_per_week
         week_mins = week_hrs*60
         
+        weekdays_len = len(weekdays);
+
         data_dict = {
         '{week_no}': str(week_no),
         '{week_start}': Internship.date_to_str(week_start),
         '{week_end}': str(week_end),
-        '{day_1}': weekdays[0],
-        '{day_2}': weekdays[1],
-        '{day_3}': weekdays[2],
-        '{day_4}': weekdays[3],
-        '{day_5}': weekdays[4],
+        '{day_1}': weekdays[0] if (weekdays_len >= 1) else "None",
+        '{day_2}': weekdays[1] if (weekdays_len >= 2) else "None",
+        '{day_3}': weekdays[2] if (weekdays_len >= 3) else "None",
+        '{day_4}': weekdays[3] if (weekdays_len >= 4) else "None",
+        '{day_5}': weekdays[4] if (weekdays_len >= 5) else "None",
         '{week_hrs}': str(week_hrs),
         '{week_mins}': f'{week_mins:,}',
         '{remaining_hrs}': str(self.get_remaining_hrs())
